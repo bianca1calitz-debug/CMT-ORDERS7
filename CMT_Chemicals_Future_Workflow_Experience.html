@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CMT Chemicals | Future Workflow Experience</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#111827;
+    --panel-2:#0f172a;
+    --soft:#1f2937;
+    --line:rgba(255,255,255,.08);
+    --text:#e5eef7;
+    --muted:#9fb0c3;
+    --accent:#22c55e;
+    --accent-2:#38bdf8;
+    --accent-3:#f59e0b;
+    --danger:#ef4444;
+    --success:#10b981;
+    --shadow:0 20px 40px rgba(0,0,0,.35);
+    --radius:24px;
+    --max:1280px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: Inter, Segoe UI, Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(56,189,248,.18), transparent 28%),
+      radial-gradient(circle at 80% 15%, rgba(34,197,94,.16), transparent 25%),
+      radial-gradient(circle at 75% 80%, rgba(245,158,11,.10), transparent 25%),
+      linear-gradient(180deg,#0b1020 0%,#09111a 100%);
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter: blur(14px);
+    background:rgba(8,12,18,.72);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .nav-inner{
+    max-width:var(--max);margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{
+    width:42px;height:42px;border-radius:14px;
+    background:linear-gradient(135deg,#1f2937,#0f172a);
+    display:grid;place-items:center;box-shadow:var(--shadow);border:1px solid var(--line)
+  }
+  .logo svg{width:24px;height:24px}
+  .brand h1{font-size:15px;margin:0;letter-spacing:.12em;text-transform:uppercase}
+  .brand p{font-size:12px;margin:2px 0 0;color:var(--muted)}
+  .nav-links{display:flex;gap:10px;flex-wrap:wrap}
+  .nav-links a{
+    padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.06);font-size:13px;color:#d7e4f1
+  }
+  .nav-links a:hover{background:rgba(255,255,255,.08)}
+  .hero{
+    position:relative;overflow:hidden;
+    min-height:92vh;display:flex;align-items:center;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, rgba(3,7,18,.88) 0%, rgba(3,7,18,.74) 38%, rgba(3,7,18,.40) 100%),
+      url("https://images.unsplash.com/photo-1581091215367-59ab6dcef10b?auto=format&fit=crop&w=1800&q=80") center/cover no-repeat;
+    filter:saturate(1.05);
+  }
+  .hero::after{
+    content:"";
+    position:absolute;right:-120px;bottom:-120px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(34,197,94,.22), transparent 62%);
+  }
+  .hero-grid{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:center;
+    width:100%;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 14px;border-radius:999px;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d2deeb
+  }
+  .hero h2{
+    font-size:clamp(38px,5vw,74px);line-height:.98;margin:18px 0 16px;max-width:780px;
+  }
+  .hero p{font-size:18px;line-height:1.8;color:#c8d6e5;max-width:760px;margin:0}
+  .cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    padding:14px 18px;border-radius:16px;font-weight:700;letter-spacing:.02em;
+    border:1px solid rgba(255,255,255,.08);display:inline-flex;align-items:center;gap:10px
+  }
+  .btn.primary{background:linear-gradient(135deg,#22c55e,#16a34a);color:#04110a;border:none}
+  .btn.secondary{background:rgba(255,255,255,.06)}
+  .panel{
+    position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+    border:1px solid rgba(255,255,255,.08);border-radius:28px;box-shadow:var(--shadow);
+  }
+  .panel::before{
+    content:"";position:absolute;inset:auto -20% -40% auto;width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle, rgba(56,189,248,.18), transparent 60%);
+  }
+  .stats{
+    padding:22px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px
+  }
+  .stat{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+    border-radius:22px;padding:18px
+  }
+  .stat b{display:block;font-size:30px}
+  .stat span{font-size:13px;color:#b8cad9}
+  section{padding:76px 0}
+  .section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;flex-wrap:wrap;margin-bottom:26px}
+  .section-head h3{font-size:36px;margin:0}
+  .section-head p{max-width:760px;margin:10px 0 0;color:var(--muted);line-height:1.8}
+  .tag{
+    display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.22);
+    color:#a7f3d0;font-size:12px;letter-spacing:.1em;text-transform:uppercase
+  }
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .card{
+    background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:22px;box-shadow:var(--shadow);
+  }
+  .card h4{margin:0 0 10px;font-size:20px}
+  .card p{margin:0;color:var(--muted);line-height:1.75}
+  .icon{
+    width:48px;height:48px;border-radius:16px;display:grid;place-items:center;margin-bottom:14px;
+    background:linear-gradient(135deg, rgba(34,197,94,.18), rgba(56,189,248,.18));border:1px solid rgba(255,255,255,.08)
+  }
+  .mock-window{
+    background:#0b1220;border:1px solid rgba(255,255,255,.08);border-radius:28px;overflow:hidden;box-shadow:var(--shadow)
+  }
+  .mock-top{
+    padding:12px 16px;background:#0f172a;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between
+  }
+  .dots{display:flex;gap:8px}
+  .dots span{width:10px;height:10px;border-radius:50%;display:block;background:#334155}
+  .dots span:nth-child(1){background:#ef4444}.dots span:nth-child(2){background:#f59e0b}.dots span:nth-child(3){background:#22c55e}
+  .mock-body{padding:18px}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .chip{
+    background:#111827;border:1px solid rgba(255,255,255,.08);padding:9px 12px;border-radius:999px;font-size:12px;color:#c9d8e6
+  }
+  .mini-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  .subcard{
+    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px
+  }
+  .order{
+    display:grid;grid-template-columns:1.15fr .9fr .6fr .8fr .7fr;gap:10px;align-items:center;
+    padding:12px;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);margin-top:10px;font-size:13px
+  }
+  .status{padding:7px 10px;border-radius:999px;font-size:12px;font-weight:700;display:inline-flex;justify-content:center}
+  .ok{background:rgba(16,185,129,.16);color:#9ff2cf}
+  .warn{background:rgba(245,158,11,.16);color:#fcd28b}
+  .bad{background:rgba(239,68,68,.16);color:#f7b0b0}
+  .chart{display:flex;align-items:end;gap:12px;height:200px;padding-top:20px}
+  .bar{
+    flex:1;border-radius:16px 16px 8px 8px;
+    background:linear-gradient(180deg,#38bdf8,#22c55e);
+    position:relative;min-height:20px
+  }
+  .bar span{
+    position:absolute;left:50%;transform:translateX(-50%);bottom:-28px;
+    font-size:12px;color:#9db0c4;white-space:nowrap
+  }
+  .bar b{
+    position:absolute;left:50%;transform:translateX(-50%);top:8px;font-size:12px;color:#04110a
+  }
+  .flow{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:14px
+  }
+  .step{
+    position:relative;padding:22px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.08)
+  }
+  .step:not(:last-child)::after{
+    content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+    color:#6b7280;font-size:24px;font-weight:700;z-index:2
+  }
+  .step-num{
+    width:38px;height:38px;border-radius:12px;background:#111827;border:1px solid rgba(255,255,255,.08);
+    display:grid;place-items:center;font-weight:800;color:#9cecc1;margin-bottom:14px
+  }
+  .example{
+    display:grid;grid-template-columns:1fr 1fr;gap:20px
+  }
+  .table{
+    width:100%;border-collapse:separate;border-spacing:0 10px
+  }
+  .table th{font-size:12px;color:#9db0c4;text-align:left;padding:0 12px 6px}
+  .table td{
+    background:rgba(255,255,255,.03);padding:14px 12px;border-top:1px solid rgba(255,255,255,.06);
+    border-bottom:1px solid rgba(255,255,255,.06)
+  }
+  .table td:first-child{border-left:1px solid rgba(255,255,255,.06);border-radius:16px 0 0 16px}
+  .table td:last-child{border-right:1px solid rgba(255,255,255,.06);border-radius:0 16px 16px 0}
+  .image-card{
+    position:relative;overflow:hidden;min-height:320px;border-radius:28px;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)
+  }
+  .image-card::before{
+    content:"";position:absolute;inset:0;background:
+      linear-gradient(180deg, rgba(3,7,18,.18), rgba(3,7,18,.78)),
+      url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
+  }
+  .image-card.alt::before{
+    background:
+      linear-gradient(180deg, rgba(3,7,18,.20), rgba(3,7,18,.84)),
+      url("https://images.unsplash.com/photo-1586528116493-6d1b5b8c2e0f?auto=format&fit=crop&w=1400&q=80") center/cover no-repeat;
+  }
+  .image-card .overlay{position:absolute;inset:auto 0 0 0;padding:24px}
+  .overlay h4{margin:0 0 8px;font-size:24px}
+  .overlay p{margin:0;color:#cfd8e3;line-height:1.7}
+  .footer{
+    padding:30px 0 80px;color:#8da3b8
+  }
+  .small{font-size:12px;color:#97a9bb}
+  @media (max-width: 1050px){
+    .hero-grid,.grid-3,.grid-2,.mini-grid,.example{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr}
+    .step:not(:last-child)::after{content:"↓";right:auto;left:50%;bottom:-18px;top:auto;transform:translateX(-50%)}
+  }
+  @media (max-width: 760px){
+    .hero{min-height:auto;padding:40px 0}
+    .hero h2{font-size:40px}
+    .stats{grid-template-columns:1fr 1fr}
+    .order{grid-template-columns:1fr}
+    .section-head h3{font-size:28px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 3h6v2l-1 1v4.5l4.8 7.7A2 2 0 0 1 17.1 21H6.9a2 2 0 0 1-1.7-2.8L10 10.5V6L9 5V3Z" stroke="#b9f8d3" stroke-width="1.6"/>
+          <path d="M8 14h8" stroke="#7dd3fc" stroke-width="1.6"/>
+        </svg>
+      </div>
+      <div>
+        <h1>CMT Chemicals</h1>
+        <p>Future Workflow Experience for Managing Director Review</p>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#internals">Internals</a>
+      <a href="#reps">Reps</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#examples">Examples</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="overview">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Operational Vision • Not just a list of changes</div>
+      <h2>What the new CMT Chemicals system could actually look and feel like</h2>
+      <p>
+        This concept website shows a live operational environment for CMT: sales reps capturing accurate orders,
+        internals validating pricing automatically, warehouse and dispatch seeing stock in real time, and leadership
+        getting instant visibility across product movement, order value, exceptions, and service performance.
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#examples">See live examples</a>
+        <a class="btn secondary" href="#workflow">View full workflow</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="stats">
+        <div class="stat"><b>R 6.82m</b><span>Orders visible this month</span></div>
+        <div class="stat"><b>94%</b><span>Pricing compliance rate</span></div>
+        <div class="stat"><b>19</b><span>Dispatches planned today</span></div>
+        <div class="stat"><b>3</b><span>Exceptions needing approval</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">Executive View</span>
+        <h3>A system that feels industrial, premium, and controlled</h3>
+        <p>
+          The goal is not a prettier spreadsheet. The goal is one connected platform where CMT can manage quotes,
+          orders, stock, call-offs, deliveries, invoices, and customer communication without losing control.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M4 18V9l8-5 8 5v9" stroke="#dff7ea" stroke-width="1.7"/><path d="M9 22v-5h6v5" stroke="#9be7ff" stroke-width="1.7"/></svg>
+        </div>
+        <h4>Internals work from one truth</h4>
+        <p>Orders, approvals, stock, call-offs and dispatches are visible in one place instead of scattered across mails, calls and files.</p>
+      </div>
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M4 12h16" stroke="#dff7ea" stroke-width="1.7"/><path d="M7 7h10v10H7z" stroke="#9be7ff" stroke-width="1.7"/></svg>
+        </div>
+        <h4>Reps sell faster with less correction</h4>
+        <p>Order forms validate customer pricing and product choices immediately, so reps submit accurately the first time.</p>
+      </div>
+      <div class="card">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 3v18M3 12h18" stroke="#dff7ea" stroke-width="1.7"/><circle cx="12" cy="12" r="8" stroke="#9be7ff" stroke-width="1.7"/></svg>
+        </div>
+        <h4>Management sees the business live</h4>
+        <p>Instead of asking around for answers, the MD can see top customers, fastest-moving chemicals, delayed dispatches and pricing issues instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="internals">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">Internals Workspace</span>
+        <h3>What internals could work from every day</h3>
+        <p>A clean shared workspace showing order activity, pricing status, stock readiness, dispatch progress and exceptions before they become problems.</p>
+      </div>
+    </div>
+
+    <div class="mock-window">
+      <div class="mock-top">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="small">CMT Chemicals • Internals Operations Board</div>
+      </div>
+      <div class="mock-body">
+        <div class="toolbar">
+          <div class="chip">Today</div>
+          <div class="chip">Auto-validated pricing</div>
+          <div class="chip">Call-offs</div>
+          <div class="chip">Dispatch planning</div>
+          <div class="chip">Customer exceptions</div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="subcard">
+            <div class="small">Live order queue</div>
+
+            <div class="order">
+              <div><b>ABC Beverages</b><br><span class="small">Mono Propolyne Glycol</span></div>
+              <div>4 000 kg</div>
+              <div>R 184 000</div>
+              <div><span class="status ok">Price Valid</span></div>
+              <div><span class="status warn">Stock Partial</span></div>
+            </div>
+
+            <div class="order">
+              <div><b>Blue Water Systems</b><br><span class="small">Citric Acid Mono</span></div>
+              <div>2 500 kg</div>
+              <div>R 92 500</div>
+              <div><span class="status bad">Old Quote</span></div>
+              <div><span class="status warn">Approval</span></div>
+            </div>
+
+            <div class="order">
+              <div><b>Prime Foods SA</b><br><span class="small">Sucralose</span></div>
+              <div>850 kg</div>
+              <div>R 246 500</div>
+              <div><span class="status ok">Price Valid</span></div>
+              <div><span class="status ok">Ready</span></div>
+            </div>
+
+            <div class="order">
+              <div><b>Nutripro</b><br><span class="small">Dextrose Mono</span></div>
+              <div>6 000 kg</div>
+              <div>R 168 000</div>
+              <div><span class="status ok">Price Valid</span></div>
+              <div><span class="status ok">Dispatch Booked</span></div>
+            </div>
+          </div>
+
+          <div class="subcard">
+            <div class="small">What the system flags instantly</div>
+            <table class="table">
+              <thead>
+                <tr><th>Issue</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Previous month quote used</td><td>Pause + request correction</td></tr>
+                <tr><td>Low stock on Mono Propolyne Glycol</td><td>Suggest partial call-off</td></tr>
+                <tr><td>Urgent delivery request</td><td>Send to priority approval</td></tr>
+                <tr><td>Customer over credit limit</td><td>Notify finance before release</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reps">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">Sales Rep Experience</span>
+        <h3>What reps could see before they submit an order</h3>
+        <p>Instead of guessing or using last month’s prices, reps see the active quote, stock position, buying history and upsell suggestions inside one guided screen.</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="mock-window">
+        <div class="mock-top">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="small">Sales Rep Order Capture</div>
+        </div>
+        <div class="mock-body">
+          <div class="subcard" style="margin-bottom:14px">
+            <div class="small">Customer</div>
+            <div style="font-size:22px;font-weight:800;margin-top:4px">Prime Foods SA</div>
+          </div>
+          <div class="grid-2" style="grid-template-columns:1fr 1fr">
+            <div class="subcard">
+              <div class="small">Chemical</div>
+              <div style="font-weight:800;font-size:18px;margin-top:5px">Sucralose</div>
+            </div>
+            <div class="subcard">
+              <div class="small">Quantity</div>
+              <div style="font-weight:800;font-size:18px;margin-top:5px">850 kg</div>
+            </div>
+          </div>
+          <div class="subcard" style="margin-top:14px">
+            <div class="small">Pricing check</div>
+            <div style="margin-top:6px;font-weight:800;color:#a7f3d0">Active March quotation matched successfully</div>
+            <div class="small" style="margin-top:8px">Rep can submit immediately without internal correction.</div>
+          </div>
+          <div class="subcard" style="margin-top:14px">
+            <div class="small">Suggested cross-sell</div>
+            <div style="margin-top:6px;font-weight:800">Citric Acid Mono</div>
+            <div class="small" style="margin-top:8px">Based on recent buying pattern and delivery route.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Rep advantages inside the new system</h4>
+        <p style="margin-bottom:16px">The point is not to add admin for reps — it is to make them faster, more accurate and more informed while selling.</p>
+
+        <div class="grid-2">
+          <div class="subcard">
+            <b>Correct pricing first time</b>
+            <p style="margin-top:8px">No more sending orders that come back because the quote is outdated.</p>
+          </div>
+          <div class="subcard">
+            <b>Visible customer history</b>
+            <p style="margin-top:8px">See what the customer buys most and when they usually reorder.</p>
+          </div>
+          <div class="subcard">
+            <b>Stock confidence</b>
+            <p style="margin-top:8px">Know whether Dextrose Mono or Citric Acid Mono is available before promising delivery.</p>
+          </div>
+          <div class="subcard">
+            <b>Faster turnaround</b>
+            <p style="margin-top:8px">Orders move straight through because the data is structured correctly from the start.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="workflow">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">How It Works</span>
+        <h3>The future workflow from quote to invoice</h3>
+        <p>This shows a real operating flow — not just typed suggestions. Every stage is visible, controlled and connected to the next one.</p>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Rep captures order</h4>
+        <p>Customer, chemical, quantity and delivery request are submitted from one guided form.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>System validates</h4>
+        <p>Quote month, price, customer terms and stock are checked automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Internals process</h4>
+        <p>Approvals, call-offs, stock allocations and dispatch planning happen from one record.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Dispatch moves</h4>
+        <p>Warehouse and transport can see what is ready, partial, urgent or delayed.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h4>Invoice and communication</h4>
+        <p>Finance and customer updates are linked to the same order journey.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="examples">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">Live-Style Examples</span>
+        <h3>Examples that show how the new system would look</h3>
+        <p>These are visual examples for the MD: product movement, top selling chemicals, and a cleaner management view of the operation.</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="card">
+        <h4>Top moving chemicals this month</h4>
+        <div class="chart">
+          <div class="bar" style="height:86%"><b>86%</b><span>Mono Propolyne Glycol</span></div>
+          <div class="bar" style="height:62%"><b>62%</b><span>Sucralose</span></div>
+          <div class="bar" style="height:74%"><b>74%</b><span>Citric Acid Mono</span></div>
+          <div class="bar" style="height:58%"><b>58%</b><span>Dextrose Mono</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Management quick decisions</h4>
+        <table class="table">
+          <thead>
+            <tr><th>Decision Point</th><th>System Insight</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Which product needs more stock?</td><td>Mono Propolyne Glycol demand trending highest</td></tr>
+            <tr><td>Which orders need attention now?</td><td>2 pricing mismatches + 1 urgent dispatch</td></tr>
+            <tr><td>Where are delays coming from?</td><td>Low stock on selected food ingredient lines</td></tr>
+            <tr><td>Who needs support?</td><td>Rep orders corrected least when system validation is used</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px">
+      <div class="image-card">
+        <div class="overlay">
+          <h4>Warehouse, stock and dispatch visibility</h4>
+          <p>The system can feel connected to the real business environment — not detached from it.</p>
+        </div>
+      </div>
+      <div class="image-card alt">
+        <div class="overlay">
+          <h4>Chemical operation identity</h4>
+          <p>A serious industrial look with product movement, planning and control built into the experience.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="card" style="padding:28px 28px 30px">
+      <h4 style="font-size:28px">Final vision for CMT Chemicals</h4>
+      <p style="font-size:17px">
+        One platform. One version of the truth. Accurate pricing, visible orders, better planning, stronger service,
+        and a business that can scale without becoming messier.
+      </p>
+    </div>
+    <div class="footer small">Concept demo prepared for internal presentation. Designed to show what the future operating model could feel like, not just what needs to change.</div>
+  </div>
+</section>
+
+</body>
+</html>
